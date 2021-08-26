@@ -2,5 +2,15 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTachometerAlt, faClipboardList, faUser, faSignOutAlt, faUserShield, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
-createApp(App).use(store).use(router).mount('#app')
+library.add(faTachometerAlt)
+library.add(faClipboardList)
+library.add(faUser)
+library.add(faSignOutAlt)
+library.add(faUserShield)
+library.add(faQuestionCircle)
+
+createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(store).use(router).mount('#app')
