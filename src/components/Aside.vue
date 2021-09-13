@@ -1,42 +1,38 @@
 <template>
     <div class="container">
         <p class="tickets-p">TICKETS</p>
-        <div class="menu">
-            <div class="menu-container">
-                <font-awesome-icon :icon="['fas', 'tachometer-alt']" :style="{color: '#DBDDE0'}" />
-                <p class="menu-p">Dashboard</p>
-            </div>
-            <div class="menu-container">
-                <font-awesome-icon :icon="['fas', 'clipboard-list']" :style="{color: '#DBDDE0'}" />
-                <p class="menu-p">Tickets</p>
-            </div>
-            <div class="menu-container">
-                <font-awesome-icon :icon="['fas', 'user']" :style="{color: '#DBDDE0'}" />
-                <p class="menu-p">User Info</p>
-            </div>
-            <div class="menu-container">
-                <font-awesome-icon :icon="['fas', 'sign-out-alt']" :style="{color: '#DBDDE0'}" />
-                <p class="menu-p">Log out</p>
-            </div>
-            <div class="menu-container">
-                <font-awesome-icon :icon="['fas', 'user-shield']" :style="{color: '#DBDDE0'}" />
-                <p class="menu-p">Administrator</p>
-            </div>
-        </div>
-        <hr class="separator">
 
-        <div class="menu">
-            <div class="menu-container">
-                <font-awesome-icon :icon="['fas', 'question-circle']" :style="{color: '#DBDDE0'}" />
-                <p class="menu-p">Help</p>
+        <div class="menu" v-for="item in menu" :key="item.id">
+            <router-link :to="item.url"><div class="menu-container" @click="fetchMenu(item.id)">
+                <font-awesome-icon :icon="['fas', item.icon]" :style="[active == item.id ? 'color: #558EFF' : 'color: #DBDDE0']" />
+                <p class="menu-p" :style="[active == item.id ? 'color: #558EFF' : '']">{{item.name}}</p>
             </div>
+            </router-link>
         </div>
     </div>
 </template>
     
 <script>
+import {mapState, mapActions} from 'vuex'
 export default {
-    name: 'Aside'
+    name: 'Aside',
+    methods: {
+        verifyActiveRoute(){
+            let actualRoute = this.$route.path
+            for(let i = 0; i < this.menu.length; i++){
+                if(this.menu[i].url == actualRoute){
+                    this.fetchMenu(this.menu[i].id)
+                }
+            }
+        },
+        ...mapActions(['fetchMenu']),
+    },
+    computed: {
+        ...mapState(['menu', 'active'])
+    },
+    mounted(){
+        this.verifyActiveRoute()
+    }
 }
 </script>
 
@@ -73,9 +69,14 @@ export default {
     color: #334D6E;
     font-weight: bold;
 }
+.active {
+    color: #558EFF;
+}
 .separator {
     width: 100%;
     margin: 2rem 0 1rem 0;
     border: 1px solid #E8E8E8;
 }
+
+
 </style>
