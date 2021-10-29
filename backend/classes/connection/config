@@ -1,0 +1,9 @@
+{
+    "connection":{
+        "server" : "localhost",
+        "user" : "root",
+        "password" : "",
+        "database" : "tickets_spa",
+        "port": "3306"
+    }
+}
